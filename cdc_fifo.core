@@ -1,0 +1,81 @@
+CAPI=2:
+name: socet:digital-lib:cdc_fifo:0.0.1
+description: FIFO for clock domain crossing
+
+filesets:
+    rtl:
+        files:
+            - src/socetlib_cdc_fifo_mem.sv
+            - src/socetlib_bin2gray.sv
+            - src/socetlib_cdc_fifo.sv
+        file_type: systemVerilogSource
+
+    tb:
+        files:
+            - tb/cdc_tb.sv
+        file_type: systemVerilogSource
+
+targets:
+    default: &default
+        filesets:
+            - rtl
+        toplevel: socetlib_cdc_fifo
+        # No parameters?
+    
+    sim:
+        <<: *default
+        description: Simulate w/TB
+        default_tool: verilator
+        filesets_append:
+            - tb
+        toplevel: tb_socetlib_cdc_fifo
+        tools:
+            verilator:
+                verilator_options:
+                    - --binary
+                    - --trace-fst
+                    - --trace-structs
+                    - --coverage
+                    - -Wno-WIDTHTRUNC
+                    - -Wno-WIDTHEXPAND
+                make_options:
+                    - -j
+
+            vcs:
+                vcs_options:
+                    - -assert svaext
+                    - -debug_access+pp
+                    - -debug_access+all
+                    - -debug_pp +vcd+vcdpluson
+            modelsim:
+                vsim_options:
+                    - -vopt
+                    - -voptargs='+acc'
+                    - -t ps
+
+    gui:
+        <<: *default
+        description: Simulate TB with GUI
+        default_tool: xcelium
+        filesets_append:
+            - tb
+        toplevel: tb_socetlib_cdc_fifo
+        tools:
+            xcelium:
+                xrun_options:
+                    - -gui
+                    - -access +rwc
+
+    lint:
+        <<: *default
+        filesets_append:
+            - tb
+        description: Linting
+        default_tool: veriblelint
+
+parameters:
+    coverage_file:
+        datatype: file
+        default: "coverage.dat"
+        description: "Name of coverage file for Verilator coverage reporting"
+        paramtype: plusarg
