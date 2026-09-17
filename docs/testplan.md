@@ -144,4 +144,45 @@ Expected behavior:
 
 - Full and empty detection continues working
 
----
+### Test 9: Write While Full
+
+Attempt to write while `wfull = 1`.
+
+Expected behavior:
+
+- Write pointer does not advance
+- Existing FIFO contents are not overwritten
+
+
+### Test 10: Read While Empty
+
+Attempt to read while `rempty = 1`.
+
+Expected behavior:
+
+- Read pointer does not advance
+- FIFO remains empty
+
+
+### Test 11: Full/Empty Flag Transition
+
+Verify flag transitions across the two clock domains.
+
+Expected behavior:
+
+- `rempty` deasserts after a write becomes visible in the read clock domain
+- `wfull` deasserts after a read becomes visible in the write clock domain
+- Synchronization latency is allowed
+
+
+### Test 12: 1-Deep FIFO
+
+Configure `FIFO_DEPTH = 1`.
+
+Expected behavior:
+
+- FIFO starts empty
+- One accepted write makes the FIFO full
+- One accepted read returns the written data
+- FIFO becomes empty again
+- Repeated write/read operations work correctly
