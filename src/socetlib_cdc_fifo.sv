@@ -7,7 +7,7 @@ module socetlib_cdc_fifo
 )
 (
 	input  logic [DATA_WIDTH-1:0] wdata,
-	input  logic winc, wclk, wnrst,
+	input  logic winc, wclk, wnrst, //winc->wrtie increment
 	output logic wfull,
 
 	output logic [DATA_WIDTH-1:0] rdata,
@@ -86,7 +86,7 @@ module socetlib_cdc_fifo
 	// ***********************************
 	end else begin
 
-		localparam int ADDR_WIDTH = $clog2(FIFO_DEPTH);
+		localparam int ADDR_WIDTH = $clog2(FIFO_DEPTH); // $clog2 calculates the ceiling of the log base 2 of a given number
 
 		logic [ADDR_WIDTH:0] wptr_bin, wptr_gray, wptr_bin_next, wptr_gray_next;
 		logic [ADDR_WIDTH:0] rptr_bin, rptr_gray, rptr_bin_next, rptr_gray_next;
@@ -99,7 +99,7 @@ module socetlib_cdc_fifo
 		logic wclken;
 
 		// Write side
-		assign wptr_bin_next = wptr_bin + (winc && !wfull);
+		assign wptr_bin_next = wptr_bin + (winc && !wfull); //write pointer binary increment when winc(request to write) and not full
 
 		flex_bin2gray #(.BIN2GRAY(1), .WIDTH(ADDR_WIDTH+1)) w_bin2gray (.cinput(wptr_bin_next), .coutput(wptr_gray_next));
 		
