@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 interface cdc_fifo_if #(
     parameter int DATA_WIDTH = 4,
     parameter int FIFO_DEPTH = 16);

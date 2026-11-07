@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 package cdc_fifo_pkg;
 
     import uvm_pkg::*;

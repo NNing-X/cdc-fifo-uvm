@@ -1,15 +1,13 @@
+`timescale 1ns/1ps
 module tb_top;
-
     import uvm_pkg::*;
     import cdc_fifo_pkg::*;
-
 
     // Interface
     cdc_fifo_if #(
         .DATA_WIDTH(DATA_WIDTH),
         .FIFO_DEPTH(FIFO_DEPTH)
     ) fifo_if();
-
 
     // DUT
     socetlib_cdc_fifo #(
@@ -28,7 +26,6 @@ module tb_top;
         .rnrst  (fifo_if.rnrst),
         .rempty (fifo_if.rempty)
     );
-
 
     // Write clock
     initial begin
