@@ -27,11 +27,9 @@ class read_monitor extends uvm_monitor;
 
 
     task run_phase(uvm_phase phase);
-
         read_transaction tx;
 
         forever begin
-
             @(vif.read_mon_cb);
 
             if (vif.read_mon_cb.rinc &&
@@ -42,11 +40,7 @@ class read_monitor extends uvm_monitor;
                 tx.data = vif.read_mon_cb.rdata;
 
                 ap.write(tx);
-
             end
-
         end
-
     endtask
-
 endclass

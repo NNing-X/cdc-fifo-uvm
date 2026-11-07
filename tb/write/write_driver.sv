@@ -10,9 +10,10 @@ class write_driver extends uvm_driver #(write_transaction);
     endfunction
 
     function void build_phase(uvm_phase phase);
-
         super.build_phase(phase);
 
+        //driver: get interface from config_db;
+        //later in tb_top: physical interface set config_db
         if (!uvm_config_db#(virtual cdc_fifo_if)::get(
             this,
             "",
@@ -25,28 +26,25 @@ class write_driver extends uvm_driver #(write_transaction);
     endfunction
 
     task run_phase(uvm_phase phase);
-
         write_transaction req;
 
         vif.write_drv_cb.winc <= 0;
         vif.write_drv_cb.wdata <= '0;
 
         forever begin
-
-            seq_item_port.get_next_item(req);
+            seq_item_port.get_next_item(req);//driver wait transaction
 
             while (vif.write_drv_cb.wfull)
-                @(vif.write_drv_cb);
+                @(vif.write_drv_cb); //if wfull -> wait
 
             vif.write_drv_cb.wdata <= req.data;
             vif.write_drv_cb.winc  <= 1'b1;
 
-            @(vif.write_drv_cb);
+            @(vif.write_drv_cb);//@write clock (write-sider driver clocking block in cdc_fifo_if)
 
             vif.write_drv_cb.winc <= 1'b0;
 
             seq_item_port.item_done();
         end
     endtask
-
 endclass

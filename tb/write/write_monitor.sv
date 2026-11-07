@@ -4,7 +4,7 @@ class write_monitor extends uvm_monitor;
 
     virtual cdc_fifo_if vif;
 
-    uvm_analysis_port #(write_transaction) ap;
+    uvm_analysis_port #(write_transaction) ap;//analysis port sends transaction from monitor to other components(eg.reference model, coverage)
 
     function new(string name = "write_monitor",
                  uvm_component parent = null);
@@ -27,13 +27,10 @@ class write_monitor extends uvm_monitor;
 
 
     task run_phase(uvm_phase phase);
-
         write_transaction tx;
 
         forever begin
-
             @(vif.write_mon_cb);
-
             if (vif.write_mon_cb.winc &&
                 !vif.write_mon_cb.wfull) begin
 
@@ -41,12 +38,8 @@ class write_monitor extends uvm_monitor;
 
                 tx.data = vif.write_mon_cb.wdata;
 
-                ap.write(tx);
-
+                ap.write(tx); //broadcast transaction
             end
-
         end
-
     endtask
-
 endclass

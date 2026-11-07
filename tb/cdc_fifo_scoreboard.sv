@@ -1,3 +1,4 @@
+//2 analysis impelemtation type
 `uvm_analysis_imp_decl(_write)
 `uvm_analysis_imp_decl(_read)
 
@@ -6,15 +7,14 @@ class cdc_fifo_scoreboard extends uvm_scoreboard;
     `uvm_component_utils(cdc_fifo_scoreboard)
 
     uvm_analysis_imp_write #(write_transaction, cdc_fifo_scoreboard) write_imp;
-    uvm_analysis_imp_read  #(read_transaction,  cdc_fifo_scoreboard) read_imp;
+    uvm_analysis_imp_read #(read_transaction,  cdc_fifo_scoreboard) read_imp;
 
-    logic [DATA_WIDTH-1:0] expected_queue[$];
+    logic [DATA_WIDTH-1:0] expected_queue[$]; //golden fifo model
 
     int write_count;
     int read_count;
     int error_count;
-
-
+    
     function new(string name = "cdc_fifo_scoreboard",
                  uvm_component parent = null);
 
@@ -26,7 +26,6 @@ class cdc_fifo_scoreboard extends uvm_scoreboard;
         write_count = 0;
         read_count  = 0;
         error_count = 0;
-
     endfunction
 
 

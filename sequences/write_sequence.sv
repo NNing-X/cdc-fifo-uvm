@@ -4,14 +4,11 @@ class write_sequence extends uvm_sequence #(write_transaction);
 
     int num_writes = 1;
 
-
     function new(string name = "write_sequence");
         super.new(name);
     endfunction
 
-
     task body();
-
         write_transaction tx;
 
         repeat (num_writes) begin
@@ -28,9 +25,6 @@ class write_sequence extends uvm_sequence #(write_transaction);
             end
 
             finish_item(tx);
-
         end
-
     endtask
-
 endclass

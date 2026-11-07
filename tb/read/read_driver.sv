@@ -23,13 +23,11 @@ class read_driver extends uvm_driver #(read_transaction);
 
 
     task run_phase(uvm_phase phase);
-
         read_transaction req;
 
         vif.read_drv_cb.rinc <= 1'b0;
 
         forever begin
-
             seq_item_port.get_next_item(req);
 
             // Wait until FIFO is not empty
@@ -45,9 +43,6 @@ class read_driver extends uvm_driver #(read_transaction);
             vif.read_drv_cb.rinc <= 1'b0;
 
             seq_item_port.item_done();
-
         end
-
     endtask
-
 endclass
