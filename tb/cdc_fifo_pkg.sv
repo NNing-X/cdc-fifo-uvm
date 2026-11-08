@@ -42,5 +42,6 @@ package cdc_fifo_pkg;
     `include "../tests/base_test.sv"
     `include "../tests/reset_test.sv"
     `include "../tests/multiple_write_read_test.sv"
+    `include "../tests/fifo_full_test.sv"
 
 endpackage
