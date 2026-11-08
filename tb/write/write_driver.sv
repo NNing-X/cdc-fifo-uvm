@@ -1,3 +1,4 @@
+
 class write_driver extends uvm_driver #(write_transaction);
 
     `uvm_component_utils(write_driver)
@@ -34,6 +35,8 @@ class write_driver extends uvm_driver #(write_transaction);
         forever begin
             seq_item_port.get_next_item(req);//driver wait transaction
 
+            @(vif.write_drv_cb);
+
             while (vif.write_drv_cb.wfull)
                 @(vif.write_drv_cb); //if wfull -> wait
 
@@ -43,6 +46,8 @@ class write_driver extends uvm_driver #(write_transaction);
             @(vif.write_drv_cb);//@write clock (write-sider driver clocking block in cdc_fifo_if)
 
             vif.write_drv_cb.winc <= 1'b0;
+
+            @(vif.write_drv_cb);
 
             seq_item_port.item_done();
         end

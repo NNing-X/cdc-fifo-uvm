@@ -1,3 +1,4 @@
+
 class read_driver extends uvm_driver #(read_transaction);
 
     `uvm_component_utils(read_driver)
@@ -30,6 +31,8 @@ class read_driver extends uvm_driver #(read_transaction);
         forever begin
             seq_item_port.get_next_item(req);
 
+            @(vif.read_drv_cb);
+
             // Wait until FIFO is not empty
             while (vif.read_drv_cb.rempty)
                 @(vif.read_drv_cb);
@@ -41,6 +44,8 @@ class read_driver extends uvm_driver #(read_transaction);
 
             // End read request
             vif.read_drv_cb.rinc <= 1'b0;
+
+            @(vif.read_drv_cb);
 
             seq_item_port.item_done();
         end
