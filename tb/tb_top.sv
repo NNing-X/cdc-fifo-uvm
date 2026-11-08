@@ -43,7 +43,7 @@ module tb_top;
             fifo_if.rclk = ~fifo_if.rclk;
     end
 
-    // Reset
+    // Reset and start uvm
     initial begin
         fifo_if.wnrst = 1'b0;
         fifo_if.rnrst = 1'b0;
@@ -56,20 +56,6 @@ module tb_top;
         );
 
         run_test();
-    end
-
-    // Start UVM
-    initial begin
-
-        uvm_config_db#(virtual cdc_fifo_if)::set(
-            null,
-            "*",
-            "vif",
-            fifo_if
-        );
-
-        run_test();
-
     end
 
     //timeout protection
