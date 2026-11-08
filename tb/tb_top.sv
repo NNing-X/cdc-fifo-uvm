@@ -35,7 +35,6 @@ module tb_top;
             fifo_if.wclk = ~fifo_if.wclk;
     end
 
-
     // Read clock
     initial begin
         fifo_if.rclk = 1'b0;
@@ -44,20 +43,20 @@ module tb_top;
             fifo_if.rclk = ~fifo_if.rclk;
     end
 
-
     // Reset
     initial begin
-
         fifo_if.wnrst = 1'b0;
         fifo_if.rnrst = 1'b0;
 
-        repeat (3) @(posedge fifo_if.wclk);
+        uvm_config_db#(virtual cdc_fifo_if)::set(
+            null,
+            "*",
+            "vif",
+            fifo_if
+        );
 
-        fifo_if.wnrst = 1'b1;
-        fifo_if.rnrst = 1'b1;
-
+        run_test();
     end
-
 
     // Start UVM
     initial begin
