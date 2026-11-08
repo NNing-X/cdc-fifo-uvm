@@ -2,7 +2,7 @@ class reset_test extends base_test;
 
     `uvm_component_utils(reset_test)
 
-    virtual cdc_fifo_if vif;
+    // virtual cdc_fifo_if vif;
 
     function new(string name = "reset_test",
                  uvm_component parent = null);

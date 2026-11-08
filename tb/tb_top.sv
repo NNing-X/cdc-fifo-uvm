@@ -72,4 +72,10 @@ module tb_top;
 
     end
 
+    //timeout protection
+    initial begin
+        #100000;
+        $fatal(1, "Simulation timeout");
+    end
+
 endmodule
