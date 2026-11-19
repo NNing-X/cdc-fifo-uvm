@@ -78,7 +78,7 @@ class fifo_random_vseq extends uvm_sequence;
             remaining_items = 8 + write_burst - read_burst;
 
             drain_seq = read_sequence::type_id::create("drain_seq");
-            drain_seq.num_reads = remaining;
+            drain_seq.num_reads = remaining_items;
             drain_seq.start(r_sequencer);
 
             total_reads += remaining_items;
