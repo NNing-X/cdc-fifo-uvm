@@ -15,6 +15,7 @@ package cdc_fifo_pkg;
     // Sequencers
     `include "write/write_sequencer.sv"
     `include "read/read_sequencer.sv"
+    `include "fifo_random_vseq.sv"
 
     // Drivers
     `include "write/write_driver.sv"
@@ -43,5 +44,6 @@ package cdc_fifo_pkg;
     `include "../tests/reset_test.sv"
     `include "../tests/multiple_write_read_test.sv"
     `include "../tests/fifo_full_test.sv"
+    `include "concurrent_random_test.sv"
 
 endpackage
