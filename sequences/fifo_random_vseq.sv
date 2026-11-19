@@ -34,7 +34,7 @@ class fifo_random_vseq extends uvm_sequence;
         write_sequence prefill_seq;
         read_sequence drain_seq;
 
-        int unsigned remaining;
+        int unsigned remaining_items;
 
         if (w_sequencer == null || r_sequencer == null)
             `uvm_fatal("NO_SEQR", "Virtual sequence sequencers not assigned")
@@ -75,13 +75,13 @@ class fifo_random_vseq extends uvm_sequence;
             total_writes += write_burst;
             total_reads += read_burst;
 
-            remaining = 8 + write_burst - read_burst;
+            remaining_items = 8 + write_burst - read_burst;
 
             drain_seq = read_sequence::type_id::create("drain_seq");
             drain_seq.num_reads = remaining;
             drain_seq.start(r_sequencer);
 
-            total_reads += remaining;
+            total_reads += remaining_items;
 
         end
 
