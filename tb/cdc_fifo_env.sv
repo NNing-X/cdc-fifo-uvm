@@ -6,6 +6,8 @@ class cdc_fifo_env extends uvm_env;
     read_agent          r_agent;
     cdc_fifo_scoreboard scoreboard;
 
+    cdc_fifo_coverage coverage;
+
     function new(string name = "cdc_fifo_env",
                  uvm_component parent = null);
         super.new(name, parent);
@@ -25,6 +27,8 @@ class cdc_fifo_env extends uvm_env;
         scoreboard = cdc_fifo_scoreboard::type_id::create(
             "scoreboard", this
         );
+        
+        coverage = cdc_fifo_coverage::type_id::create("coverage", this);
 
     endfunction
 

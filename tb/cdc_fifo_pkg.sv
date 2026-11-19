@@ -31,6 +31,9 @@ package cdc_fifo_pkg;
     // Scoreboard
     `include "cdc_fifo_scoreboard.sv"
 
+    //coverage
+    `include "cdc_fifo_coverage.sv"
+
     // Environment
     `include "cdc_fifo_env.sv"
 
